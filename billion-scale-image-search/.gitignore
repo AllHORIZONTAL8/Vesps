@@ -1,0 +1,13 @@
+target
+.idea
+.vscode
+*iml
+*~
+#*#
+src/main/application/security/clients.pem
+data-plane-public-cert.pem
+data-plane-private-key.pem
+centroids.jsonl
+feed.jsonl
+img_emb_0000.npy
+metadata_0000.parquet

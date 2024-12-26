@@ -1,0 +1,59 @@
+name: Vespa Sampleapps Search Feed
+on:
+  push:
+    branches: [ master ]
+    paths-ignore:
+      - Gemfile.lock
+
+env:
+  DATA_PLANE_PUBLIC_KEY     : ${{ secrets.VESPA_TEAM_DATA_PLANE_PUBLIC_CERT }}
+  DATA_PLANE_PRIVATE_KEY    : ${{ secrets.VESPA_TEAM_DATA_PLANE_PRIVATE_KEY }}
+  VESPA_CLI_DATA_PLANE_CERT : ${{ secrets.VESPA_TEAM_VESPA_CLI_DATA_PLANE_CERT }}
+  VESPA_CLI_DATA_PLANE_KEY  : ${{ secrets.VESPA_TEAM_VESPA_CLI_DATA_PLANE_KEY }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.1
+        bundler-cache: true
+
+    - name: Generate feed-file (add empty frontmatter to README files first)
+      run: |
+        find . -not -path './_site/*' -not -path './test/*' -not -path './vendor/*' -name \*README.md | \
+          while read f; do (echo -e "---\nrender_with_liquid: false\n---\n"; cat ${f})>${f}.new; mv ${f}.new ${f}; done
+        bundle exec jekyll build -p _plugins-vespafeed
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip3 install PyYAML mmh3 requests html5lib beautifulsoup4 markdownify tiktoken
+
+    - name: Install Vespa CLI
+      uses: vespa-engine/setup-vespa-cli-action@v1
+
+    - name: Feed site
+      run: |
+        # The python scripts below uses the Vespa CLI for feeding / data access.
+        # See https://docs.vespa.ai/en/vespa-cli.html.
+        # The environment variables below have credentials for endpoint access -
+        # use the key/cert files in .vespa and paste their content into GitHub Secrets.
+        export VESPA_CLI_DATA_PLANE_CERT
+        export VESPA_CLI_DATA_PLANE_KEY
+        ./feed_to_vespa.py _config.yml
+
+    - name: Feed paragraphs site
+      run: |
+        ./feed-split.py vespaapps_index.json https://github.com/vespa-engine/sample-apps/tree/master questions.jsonl
+        ./feed_to_vespa.py _paragraphs_config.yml
+
+    - name: Feed suggestions
+      run: |
+        ./feed_to_vespa.py _suggestions_config.yml

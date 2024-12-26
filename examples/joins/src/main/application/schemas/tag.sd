@@ -1,0 +1,27 @@
+# Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
+schema tag {
+
+    document tag inherits base {
+
+        field tagid type int {
+            indexing: summary | attribute
+        }
+
+        field score type int {
+            indexing: summary | attribute
+        }
+
+    }
+    document-summary attribute-only {
+        summary id { }
+        summary start { }
+        summary end { }
+    }
+
+    rank-profile default inherits default {
+        first-phase {
+            expression: attribute(score)
+        }
+    }
+
+}

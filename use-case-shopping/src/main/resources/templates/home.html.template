@@ -1,0 +1,16 @@
+{{header}}
+
+<div class="home-navigation">
+    {{home-navigation}}
+</div>
+
+<div class="home">
+
+    <div class="title-container">
+        <div class="title-text">Popular products</div>
+    </div>
+    {{promoted-items}}
+</div>
+
+{{footer}}
+

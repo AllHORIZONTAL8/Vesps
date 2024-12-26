@@ -1,0 +1,37 @@
+# Copyright Vespa.ai. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
+
+urls:
+    - splade/README.md
+    - colbert-long/README.md
+    - multi-vector-indexing/README.md
+    - vector-streaming-search/README.md
+    - custom-embeddings/README.md
+    - commerce-product-ranking/README.md
+    - simple-semantic-search/README.md
+    - colbert/README.md
+    - text-image-search/README.md
+    - text-search/README.md
+    - examples/lucene-linguistics/non-java//README.md
+    - examples/document-processing/README.md
+    - examples/predicate-fields/README.md
+    - examples/operations/multinode/README.md
+    - examples/generic-request-processing/README.md
+    - examples/http-api-using-request-handlers-and-processors/README.md
+    - examples/multiple-bundles/README.md
+    - model-inference/README.md
+    - examples/part-purchases-demo/README.md
+    - examples/vespa-chinese-linguistics/README.md
+    - incremental-search/search-as-you-type/README.md
+    - incremental-search/search-suggestions/README.md
+    - transformers/README.md
+    - examples/operations/multinode-HA/README.md
+    - msmarco-ranking/README.md
+    - use-case-shopping/README.md
+    - multilingual-search/README.md
+    - retrieval-augmented-generation/README.md
+
+    # examples/operations/album-recommendation-monitoring is tested in
+    # https://docs.vespa.ai/en/operations/monitoring.html#monitoring-with-grafana
+
+    # TBD:
+    # - operations/basic-search-on-gke
