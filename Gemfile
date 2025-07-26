@@ -9,4 +9,4 @@ gem 'jekyll', '>= 4.2.1'
 
 # Get the html-proofer to work
 gem 'rake'
-gem 'html-proofer'
+gem 'html-proofer', '>= 5.0.9'
