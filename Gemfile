@@ -5,7 +5,7 @@ ruby '>=2.6'
 
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
-gem 'jekyll', '>= 4.2.1'
+gem 'jekyll', '>= 4.3.4'
 
 # Get the html-proofer to work
 gem 'rake'
